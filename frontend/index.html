@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Telco Churn Predictor</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <main class="container">
+    <h1>Telco Churn Predictor</h1>
+    <p>Predice si un cliente tiene riesgo de cancelar el servicio.</p>
+
+    <form id="churn-form">
+        <label>Gender</label>
+        <select id="gender">
+            <option>Female</option>
+            <option>Male</option>
+        </select>
+
+        <label>Partner</label>
+        <select id="Partner">
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+
+        <label>Dependents</label>
+        <select id="Dependents">
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+
+        <label>Tenure</label>
+        <input id="tenure" type="number" value="5" />
+
+        <label>PhoneService</label>
+        <select id="PhoneService">
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+
+        <label>MultipleLines</label>
+        <select id="MultipleLines">
+            <option>No</option>
+            <option>Yes</option>
+            <option>No phone service</option>
+        </select>
+
+        <label>InternetService</label>
+        <select id="InternetService">
+            <option>Fiber optic</option>
+            <option>DSL</option>
+            <option>No</option>
+        </select>
+
+        <label>OnlineSecurity</label>
+        <select id="OnlineSecurity">
+            <option>No</option>
+            <option>Yes</option>
+            <option>No internet service</option>
+        </select>
+
+        <label>OnlineBackup</label>
+        <select id="OnlineBackup">
+            <option>No</option>
+            <option>Yes</option>
+            <option>No internet service</option>
+        </select>
+
+        <label>DeviceProtection</label>
+        <select id="DeviceProtection">
+            <option>No</option>
+            <option>Yes</option>
+            <option>No internet service</option>
+        </select>
+
+        <label>TechSupport</label>
+        <select id="TechSupport">
+            <option>No</option>
+            <option>Yes</option>
+            <option>No internet service</option>
+        </select>
+
+        <label>StreamingTV</label>
+        <select id="StreamingTV">
+            <option>No</option>
+            <option>Yes</option>
+            <option>No internet service</option>
+        </select>
+
+        <label>StreamingMovies</label>
+        <select id="StreamingMovies">
+            <option>No</option>
+            <option>Yes</option>
+            <option>No internet service</option>
+        </select>
+
+        <label>Contract</label>
+        <select id="Contract">
+            <option>Month-to-month</option>
+            <option>One year</option>
+            <option>Two year</option>
+        </select>
+
+        <label>PaymentMethod</label>
+        <select id="PaymentMethod">
+            <option>Electronic check</option>
+            <option>Mailed check</option>
+            <option>Bank transfer (automatic)</option>
+            <option>Credit card (automatic)</option>
+        </select>
+
+        <label>MonthlyCharges</label>
+        <input id="MonthlyCharges" type="number" step="0.01" value="70.5" />
+
+        <label>TotalCharges</label>
+        <input id="TotalCharges" type="number" step="0.01" value="350.2" />
+
+        <button type="submit">Predecir churn</button>
+        </form>
+
+        <section id="result"></section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
