@@ -18,14 +18,14 @@ app = FastAPI(
 )
 # Aca estoy creando la API
 
-if ALLOWED_ORIGINS:
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=["*"],
-        allow_credentials=False,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
+#if ALLOWED_ORIGINS:
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
     # Aca uso CORS indicandole al navegador que el frontend tiene permiso para usar la API.
 try:
     model = joblib.load(MODEL_PATH)
