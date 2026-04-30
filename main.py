@@ -1,9 +1,8 @@
 import os
 from typing import Any, Dict
-
 import joblib
 import pandas as pd
-from fastapi import Body, FastAPI, HTTPException
+from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 MODEL_PATH = os.getenv("MODEL_PATH", "model_pipeline.pkl")
@@ -17,6 +16,11 @@ app = FastAPI(
     description="API de predicción de churn desplegable en Render"
 )
 # Aca estoy creando la API
+
+API_KEY = os.getenv("API_KEY")
+print("API KEY:", API_KEY)
+# Aca obtengo una variable de entorno llamada API_KEY
+
 
 #if ALLOWED_ORIGINS:
 app.add_middleware(
@@ -45,29 +49,12 @@ def health():
 
 @app.post("/predict")
 def predict(
-    data: Dict[str, Any] = Body(
-        ...,
-        example={
-            "gender": "Female",
-            "Partner": "Yes",
-            "Dependents": "No",
-            "PhoneService": "Yes",
-            "MultipleLines": "No",
-            "InternetService": "Fiber optic",
-            "OnlineSecurity": "No",
-            "OnlineBackup": "Yes",
-            "DeviceProtection": "No",
-            "TechSupport": "No",
-            "StreamingTV": "Yes",
-            "StreamingMovies": "Yes",
-            "Contract": "Month-to-month",
-            "PaymentMethod": "Electronic check",
-            "tenure": 5,
-            "MonthlyCharges": 70.5,
-            "TotalCharges": 350.2
-        }
-    ) # Endpoint importante: recibo datos --> hago una predicción
+    data: dict, # FastAPI ya sabe que si es un dict --> viene del body, por eso no se escribe
+    x_api_key: str = Header(...) # Headers le dice a FastAPI "este valor viene en los HEADERS del request"
 ):
+    if  x_api_key != API_KEY:
+        raise HTTPException(status_code=403, detail="No autorizado")
+    
     try:
         df = pd.DataFrame([data]) # convierto a dataframe porque sklearn espera eso
         probability = float(model.predict_proba(df)[:, 1][0]) #probabilidad de churn
