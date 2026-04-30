@@ -17,11 +17,6 @@ app = FastAPI(
 )
 # Aca estoy creando la API
 
-API_KEY = os.getenv("API_KEY")
-print("API KEY:", API_KEY)
-# Aca obtengo una variable de entorno llamada API_KEY
-
-
 #if ALLOWED_ORIGINS:
 app.add_middleware(
     CORSMiddleware,
@@ -48,13 +43,7 @@ def health():
 # Chequeo técnico para Render (Endpoint simple)
 
 @app.post("/predict")
-def predict(
-    data: dict, # FastAPI ya sabe que si es un dict --> viene del body, por eso no se escribe
-    x_api_key: str = Header(...) # Headers le dice a FastAPI "este valor viene en los HEADERS del request"
-):
-    if  x_api_key != API_KEY:
-        raise HTTPException(status_code=403, detail="No autorizado")
-    
+def predict(data: dict): #FastAPI ya sabe que si es un dict --> viene del body, por eso no se escribe
     try:
         df = pd.DataFrame([data]) # convierto a dataframe porque sklearn espera eso
         probability = float(model.predict_proba(df)[:, 1][0]) #probabilidad de churn
