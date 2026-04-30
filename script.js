@@ -1,11 +1,12 @@
 const API_URL = "https://telco-churn-api-cj8e.onrender.com/predict";
 
-document.getElementById("churn-form").addEventListener("submit", async function (event) {
-    event.preventDefault();
 document.getElementById("clear-btn").addEventListener("click", function () {
     document.getElementById("churn-form").reset();
     document.getElementById("result").innerHTML = "";
 });
+//Form Submit
+document.getElementById("churn-form").addEventListener("submit", async function (event) {
+    event.preventDefault();
 
     const payload = {
         gender: document.getElementById("gender").value,
