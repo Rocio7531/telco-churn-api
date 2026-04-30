@@ -7,6 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import logging
 
+logging.basicConfig(level=logging.INFO)
+
 class CustomerData(BaseModel):
     gender: str
     Partner: str
@@ -71,13 +73,13 @@ def predict(data: CustomerData): #FastAPI ya sabe que si es un dict --> viene de
         probability = float(model.predict_proba(df)[:, 1][0]) #probabilidad de churn
         prediction = int(probability >= 0.30)
 
+        logging.info("Prediction request received")
+        logging.info(f"Prediction: {prediction}, Probability: {probability}")
+
         return {
             "prediction": prediction,
             "churn_probability": probability
         }
     except Exception as e:
+        logging.exception("Prediction_failed")
         raise HTTPException(status_code=500, detail=f"Prediction failed: {e}")
-
-    logging.basicConfig(level=logging.INFO)
-    logging.info("Prediction request received")
-    logging.info(f"Prediction: {prediction}, Probability: {probability}")
