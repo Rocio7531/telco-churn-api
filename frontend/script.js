@@ -30,8 +30,8 @@ document.getElementById("churn-form").addEventListener("submit", async function 
         const response = await fetch(API_URL, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json", #Le decis a la API: te mando JSON
-            "x_api_key": mono1234 #Le mando mi clave para que me deje pasar
+            "Content-Type": "application/json", //Le decis a la API: te mando JSON
+            "x_api_key": mono1234 //Le mando mi clave para que me deje pasar
         },
         body: JSON.stringify(payload)
     });
