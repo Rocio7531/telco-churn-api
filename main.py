@@ -21,7 +21,7 @@ app = FastAPI(
 #if ALLOWED_ORIGINS:
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://rocio7531.github.io"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
