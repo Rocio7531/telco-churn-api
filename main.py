@@ -1,9 +1,30 @@
-import os
+    import os
 from typing import Any, Dict
 import joblib
 import pandas as pd
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+import logging
+
+class CustomerData(BaseModel):
+    gender: str
+    Partner: str
+    Dependents: str
+    PhoneService: str
+    MultipleLines: str
+    InternetService: str
+    OnlineSecurity: str
+    OnlineBackup: str
+    DeviceProtection: str
+    TechSupport: str
+    StreamingTV: str
+    StreamingMovies: str
+    Contract: str
+    PaymentMethod: str
+    tenure: int
+    MonthlyCharges: float
+    TotalCharges: float
 
 MODEL_PATH = os.getenv("MODEL_PATH", "model_pipeline.pkl")
 ALLOWED_ORIGINS_RAW = os.getenv("ALLOWED_ORIGINS", "")
@@ -43,9 +64,10 @@ def health():
 # Chequeo técnico para Render (Endpoint simple)
 
 @app.post("/predict")
-def predict(data: dict): #FastAPI ya sabe que si es un dict --> viene del body, por eso no se escribe
+def predict(data: CustomerData): #FastAPI ya sabe que si es un dict --> viene del body, por eso no se escribe
     try:
-        df = pd.DataFrame([data]) # convierto a dataframe porque sklearn espera eso
+        df = pd.DataFrame([data.model_dump()]) # convierto a dataframe porque sklearn espera eso. 
+        #model_dump() convierte el objeto (CustomerData) en un diccionario
         probability = float(model.predict_proba(df)[:, 1][0]) #probabilidad de churn
         prediction = int(probability >= 0.30)
 
@@ -55,3 +77,7 @@ def predict(data: dict): #FastAPI ya sabe que si es un dict --> viene del body, 
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction failed: {e}")
+
+    logging.basicConfig(level=logging.INFO)
+    logging.info("Prediction request received")
+    logging.info(f"Prediction: {prediction}, Probability: {probability}")
