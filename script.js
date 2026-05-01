@@ -29,13 +29,13 @@ document.getElementById("churn-form").addEventListener("submit", async function 
     };
 
     const resultBox = document.getElementById("result");
-    resultBox.innerHTML = "Calculando...";
+    resultBox.innerHTML = "Calculating prediction...";
 
     try {
         const response = await fetch(API_URL, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json", //Le decis a la API: te mando JSON
+            "Content-Type": "application/json", //This tells the API that the request body is in JSON format
         },
         body: JSON.stringify(payload)
     });
@@ -50,14 +50,14 @@ document.getElementById("churn-form").addEventListener("submit", async function 
     const probability = (data.churn_probability * 100).toFixed(2);
 
     if (data.prediction === 1) {
-        resultBox.innerHTML = `⚠️ Cliente con riesgo de churn. Probabilidad: ${probability}%`;
+        resultBox.innerHTML = `⚠️ Customer at risk of churn. Probability: ${probability}%`;
         resultBox.style.background = "#ffe0e0";
     } else {
-        resultBox.innerHTML = `✅ Cliente probablemente retenido. Probabilidad de churn: ${probability}%`;
+        resultBox.innerHTML = `✅ Customer likely to be retained. Churn probability: ${probability}%`;
         resultBox.style.background = "#e0ffe8";
     }
 
     } catch (error) {
-        resultBox.innerHTML = "No se pudo conectar con la API.";
+        resultBox.innerHTML = "Unable to connect to the API";
     }
 });
