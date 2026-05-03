@@ -70,6 +70,7 @@ Example:
   "MonthlyCharges": 70.5,
   "TotalCharges": 350.2
 }
+```
 
 ### Response
 
