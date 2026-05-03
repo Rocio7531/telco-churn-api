@@ -56,7 +56,6 @@ document.getElementById("churn-form").addEventListener("submit", async function 
         resultBox.innerHTML = `✅ Customer likely to be retained. Churn probability: ${probability}%`;
         resultBox.style.background = "#e0ffe8";
     }
-
     } catch (error) {
         resultBox.innerHTML = "Unable to connect to the API";
     }
